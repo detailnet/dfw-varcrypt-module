@@ -8,7 +8,8 @@ use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\ControllerProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
-use Zend\ModuleManager\ModuleManager;
+use Zend\ModuleManager\ModuleEvent;
+//use Zend\ModuleManager\ModuleManager;
 use Zend\ServiceManager\Config as ServiceConfig;
 use Zend\ServiceManager\ServiceManager;
 use Zend\Stdlib\ArrayUtils;
@@ -19,20 +20,24 @@ class Module implements
     ControllerProviderInterface,
     ServiceProviderInterface
 {
-    public function load(ServiceManager $serviceLocator, ModuleManager $moduleManager)
+    public function onLoadModules(ServiceManager $serviceLocator, ModuleEvent $event)
     {
-        $config = ArrayUtils::merge(
+//        /** @var ModuleManager $moduleManager */
+//        $moduleManager = $event->getTarget();
+
+        $serviceConfig = ArrayUtils::merge(
             $this->getConfig(false)['service_manager'],
             $this->getServiceConfig()
         );
 
-        $serviceConfig = new ServiceConfig($config);
+        $serviceConfig = new ServiceConfig($serviceConfig);
         $serviceConfig->configureServiceManager($serviceLocator);
 
         /** @var \Detail\VarCrypt\Listener\MultiEncryptorListener $encryptorListener */
         $encryptorListener = $serviceLocator->get('Detail\VarCrypt\Listener\MultiEncryptorListener');
+        $encryptorListener->onLoadModules($event);
 
-        $moduleManager->getEventManager()->attachAggregate($encryptorListener);
+//        $moduleManager->getEventManager()->attachAggregate($encryptorListener);
     }
 
     /**

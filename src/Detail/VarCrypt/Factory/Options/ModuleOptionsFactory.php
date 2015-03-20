@@ -17,32 +17,27 @@ class ModuleOptionsFactory implements
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-//        $config = $serviceLocator->get('Config');
-//
-//        if (!isset($config['detail_varcrypt'])) {
-//            throw new ConfigException('Config for Detail\VarCrypt is not set');
-//        }
-//
-//        return new ModuleOptions($config['detail_varcrypt']);
+        /** @var \Zend\ModuleManager\ModuleManager $moduleManager */
+        $moduleManager = $serviceLocator->get('ModuleManager');
+        /** @var \Detail\VarCrypt\Module $module */
+        $module = $moduleManager->getModule('Detail\VarCrypt');
 
-        $config = array(
-            'encryptor' => 'Keboola\Encryption\AesEncryptor',
-            'key' => 'xx330ac01bac67c9b03a1956720bceyy',
-            'listeners' => array(
-                'Detail\VarCrypt\Listener\MultiEncryptorListener' => array(
-                    'variables' => array(
-//                        'mysql' => array(
-//                            'password' => 'unencrypted_mysql_password',
-//                            'port' => 3306,
-//                        ),
-                    ),
-                    'apply_variables' => array(
-//                        'mysql'
-                    ),
-                ),
-            ),
-        );
+        if ($module === null) {
+            throw new ConfigException('Module Detail\VarCrypt is not loaded');
+        }
 
-        return new ModuleOptions($config);
+        $config = $module->getConfig();
+
+        if (!isset($config['detail_varcrypt'])) {
+            throw new ConfigException('Config for Detail\VarCrypt is not set');
+        }
+
+        $moduleOptions = new ModuleOptions($config['detail_varcrypt']);
+
+        if (!$moduleOptions->getKey()) {
+            throw new ConfigException('Missing required config option "key" for module Detail\VarCrypt');
+        }
+
+        return $moduleOptions;
     }
 }
