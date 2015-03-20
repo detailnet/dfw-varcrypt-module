@@ -8,6 +8,10 @@ use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\ControllerProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
+use Zend\ModuleManager\ModuleManager;
+use Zend\ServiceManager\Config as ServiceConfig;
+use Zend\ServiceManager\ServiceManager;
+use Zend\Stdlib\ArrayUtils;
 
 class Module implements
     AutoloaderProviderInterface,
@@ -15,6 +19,22 @@ class Module implements
     ControllerProviderInterface,
     ServiceProviderInterface
 {
+    public function load(ServiceManager $serviceLocator, ModuleManager $moduleManager)
+    {
+        $config = ArrayUtils::merge(
+            $this->getConfig(false)['service_manager'],
+            $this->getServiceConfig()
+        );
+
+        $serviceConfig = new ServiceConfig($config);
+        $serviceConfig->configureServiceManager($serviceLocator);
+
+        /** @var \Detail\VarCrypt\Listener\MultiEncryptorListener $encryptorListener */
+        $encryptorListener = $serviceLocator->get('Detail\VarCrypt\Listener\MultiEncryptorListener');
+
+        $moduleManager->getEventManager()->attachAggregate($encryptorListener);
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -32,9 +52,15 @@ class Module implements
     /**
      * {@inheritdoc}
      */
-    public function getConfig()
+    public function getConfig($withoutServiceManager = true)
     {
-        return include __DIR__ . '/../../../config/module.config.php';
+        $config = include __DIR__ . '/../../../config/module.config.php';
+
+        if ($withoutServiceManager !== false) {
+            unset($config['service_manager']);
+        }
+
+        return $config;
     }
 
     public function getControllerConfig()
