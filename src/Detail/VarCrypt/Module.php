@@ -20,10 +20,12 @@ class Module implements
     ControllerProviderInterface,
     ServiceProviderInterface
 {
-    public function onLoadModules(ServiceManager $serviceLocator, ModuleEvent $event)
+    public function onLoadModules(ModuleEvent $event)
     {
 //        /** @var ModuleManager $moduleManager */
 //        $moduleManager = $event->getTarget();
+        /** @var ServiceManager $serviceLocator */
+        $serviceLocator = $event->getParam('ServiceManager');
 
         $serviceConfig = ArrayUtils::merge(
             $this->getConfig(false)['service_manager'],
