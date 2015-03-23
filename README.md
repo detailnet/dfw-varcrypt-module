@@ -35,7 +35,16 @@ Install the module through [Composer](http://getcomposer.org/) using the followi
   6. Open `configs/application.config.php` and add following key to your `modules`:
 
      ```php
-     'Detail\VarCrypt',
+     'service_manager' => array(
+         'delegators' => array(
+             'ModuleManager' => array(
+                 // By attaching this delegator the module Detail\VarCrypt is loaded before
+                 // all other modules so that the encrypted environment variables can be
+                 // applied before the configs of the other modules are merged/applied.
+                 'Detail\VarCrypt\Factory\ModuleManager\ModuleManagerDelegatorFactory',
+             ),
+         ),
+     ),
      ```
 
   7. Copy `vendor/detailnet/dfw-varcrypt-module/config/detail_varcrypt.local.php.dist` into your application's
