@@ -71,9 +71,9 @@ class MultiEncryptorListener extends BaseEncryptorListener implements
     }
 
     /**
-     * @param ModuleEvent $e
+     * @param ModuleEvent $event
      */
-    public function onLoadModules(ModuleEvent $e)
+    public function onLoadModules(ModuleEvent $event)
     {
         $encryptor = $this->getEncryptor();
 

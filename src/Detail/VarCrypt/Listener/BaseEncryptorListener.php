@@ -23,9 +23,9 @@ abstract class BaseEncryptorListener implements
     }
 
     /**
-     * @param ModuleEvent $e
+     * @param ModuleEvent $event
      */
-    abstract public function onLoadModules(ModuleEvent $e);
+    abstract public function onLoadModules(ModuleEvent $event);
 
     /**
      * {@inheritDoc}

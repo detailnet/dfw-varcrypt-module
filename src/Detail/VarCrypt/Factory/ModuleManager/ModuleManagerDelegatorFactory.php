@@ -35,7 +35,9 @@ class ModuleManagerDelegatorFactory implements
             // Load VarCrypt module before the (other) modules are loaded,
             // and thus before the configs are merged.
             $moduleManager->getEventManager()->attach(
-                ModuleEvent::EVENT_LOAD_MODULES, $loadVarCryptModule, 10000
+                ModuleEvent::EVENT_LOAD_MODULES,
+                $loadVarCryptModule,
+                10000
             );
         }
 

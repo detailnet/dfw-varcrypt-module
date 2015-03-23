@@ -14,28 +14,33 @@ class ModuleOptionsTest extends OptionsTestCase
         $this->options = $this->getOptions(
             'Detail\VarCrypt\Options\ModuleOptions',
             array(
-//                'getClient',
-//                'setClient',
+                'getEncryptor',
+                'setEncryptor',
+                'getKey',
+                'setKey',
             )
         );
     }
 
-    public function testDummy()
+    public function testEncryptorCanBeSet()
     {
-        // Remove once we have a real test
+        $encryptor = 'Some\Encryptor\Class';
+
+        $this->assertNull($this->options->getEncryptor());
+
+        $this->options->setEncryptor($encryptor);
+
+        $this->assertEquals($encryptor, $this->options->getEncryptor());
     }
 
-//    public function testClientCanBeSet()
-//    {
-//        $clientOptions = array('base_url' => 'some-url');
-//
-//        $this->assertNull($this->options->getClient());
-//
-//        $this->options->setClient($clientOptions);
-//
-//        $client = $this->options->getClient();
-//
-//        $this->assertInstanceOf('Detail\FileConversion\Options\Client\FileConversionClientOptions', $client);
-//        $this->assertEquals($clientOptions['base_url'], $client->getBaseUrl());
-//    }
+    public function testKeyCanBeSet()
+    {
+        $key = 'some-key';
+
+        $this->assertNull($this->options->getKey());
+
+        $this->options->setKey($key);
+
+        $this->assertEquals($key, $this->options->getKey());
+    }
 }
