@@ -15,8 +15,12 @@ class CliControllerFactory implements
      * {@inheritDoc}
      * @return Controller
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function createService(ServiceLocatorInterface $controllerManager)
     {
+        /** @var \Zend\Mvc\Controller\ControllerManager $controllerManager */
+
+        $serviceLocator = $controllerManager->getServiceLocator();
+
 //        /** @var \Detail\VarCrypt\Options\ModuleOptions $moduleOptions */
 //        $moduleOptions = $serviceLocator->get('Detail\VarCrypt\Options\ModuleOptions');
 

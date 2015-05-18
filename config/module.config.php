@@ -9,7 +9,6 @@ return array(
         'invokables' => array(
         ),
         'factories' => array(
-            'Detail\VarCrypt\Controller\CliController' => 'Detail\VarCrypt\Factory\Controller\CliControllerFactory',
             'Detail\VarCrypt\Listener\MultiEncryptorListener' => 'Detail\VarCrypt\Factory\Listener\MultiEncryptorListenerFactory',
             'Detail\VarCrypt\Listener\SimpleEncryptorListener' => 'Detail\VarCrypt\Factory\Listener\SimpleEncryptorListenerFactory',
             'Detail\VarCrypt\Options\ModuleOptions' => 'Detail\VarCrypt\Factory\Options\ModuleOptionsFactory',
@@ -22,10 +21,15 @@ return array(
         'shared' => array(
         ),
     ),
+    'controllers' => array(
+        'factories' => array(
+            'Detail\VarCrypt\Controller\CliController' => 'Detail\VarCrypt\Factory\Controller\CliControllerFactory',
+        ),
+    ),
     'console' => array(
         'router' => array(
             'routes' => array(
-                'console.dfw-varcrypt.encode' => array(
+                'dfw-varcrypt.encode' => array(
                     'options' => array(
                         'route'    => 'varcrypt encode [--verbose|-v] <value>',
                         'defaults' => array(

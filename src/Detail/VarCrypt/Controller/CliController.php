@@ -9,42 +9,11 @@ use Zend\Console\Adapter\AdapterInterface as Console;
 use Zend\Console\ColorInterface as ConsoleColor;
 use Zend\Mvc\Controller\AbstractActionController;
 
-//use Detail\VarCrypt\BaseEncryptor;
 use Detail\VarCrypt\SimpleEncryptor;
 use Detail\VarCrypt\Exception;
-//use Detail\VarCrypt\Options\ModuleOptions;
 
 class CliController extends AbstractActionController
 {
-//    /**
-//     * @var ModuleOptions
-//     */
-//    protected $options;
-//
-//    /**
-//     * @param ModuleOptions $options
-//     */
-//    public function __construct(ModuleOptions $options)
-//    {
-//        $this->setOptions($options);
-//    }
-//
-//    /**
-//     * @return ModuleOptions
-//     */
-//    public function getOptions()
-//    {
-//        return $this->options;
-//    }
-//
-//    /**
-//     * @param ModuleOptions $options
-//     */
-//    public function setOptions(ModuleOptions $options)
-//    {
-//        $this->options = $options;
-//    }
-
     /**
      * @var SimpleEncryptor
      */
@@ -79,19 +48,12 @@ class CliController extends AbstractActionController
      */
     public function encodeAction()
     {
-        $this->writeConsoleLine('encode');
-
         $request = $this->getConsoleRequest();
 
         $value = $request->getParam('value');
-
-//        $encryptorClass = $request->getParam('encryptor', $this->getOptions()->getEncryptor());
-//        /** @var BaseEncryptor $encryptor */
-//        $encryptor = $this->getEncryptors()->getEncryptor($encryptorClass);
-
         $encodedValue = $this->getEncryptor()->encode($value);
 
-        var_dump($value, $encodedValue);
+        $this->writeConsoleLine($encodedValue);
     }
 
     /**
@@ -125,19 +87,7 @@ class CliController extends AbstractActionController
         }
 
         if ($isVerbose) {
-            $console->writeLine(sprintf('[%s] %s', $this->getTime(), $message), $color);
+            $console->writeLine($message, $color);
         }
-    }
-
-    /**
-     * @return string
-     */
-    protected function getTime()
-    {
-        $time = microtime(true);
-        $micro = sprintf("%06d", ($time - floor($time)) * 1000000);
-        $date = new DateTime(date('Y-m-d H:i:s.' . $micro, $time));
-
-        return $date->format("Y-m-d H:i:s.u");
     }
 }

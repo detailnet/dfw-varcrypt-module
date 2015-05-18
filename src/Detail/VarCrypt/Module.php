@@ -89,8 +89,9 @@ class Module implements
     public function getConsoleUsage(Console $console)
     {
         return array(
-            'Encryption actions:',
+            'Actions:',
             'varcrypt encode [--verbose|-v] <value>' => 'Encode a string',
+            array('<value>',      'The string to encode'),
             array('--verbose|-v', '(optional) Turn on verbose mode'),
         );
     }
