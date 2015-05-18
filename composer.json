@@ -24,6 +24,7 @@
         "psr/log": "~1.0",
         "keboola/php-encryption": "~0.2.1",
         "zendframework/zend-config": "2.*",
+        "zendframework/zend-console": "2.*",
         "zendframework/zend-loader": "2.*",
         "zendframework/zend-modulemanager": "2.*",
         "zendframework/zend-mvc": "2.*",
