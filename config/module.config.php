@@ -29,12 +29,22 @@ return array(
     'console' => array(
         'router' => array(
             'routes' => array(
-                'dfw-varcrypt.encode' => array(
+                'dfw-varcrypt.encode-value' => array(
                     'options' => array(
-                        'route'    => 'varcrypt encode [--verbose|-v] <value>',
+//                        'route'    => 'varcrypt encode-value [--verbose|-v] <value>',
+                        'route'    => 'varcrypt encode-value <value>',
                         'defaults' => array(
                             'controller' => 'Detail\VarCrypt\Controller\CliController',
-                            'action'     => 'encode',
+                            'action'     => 'encodeValue',
+                        ),
+                    ),
+                ),
+                'dfw-varcrypt.decode-value' => array(
+                    'options' => array(
+                        'route'    => 'varcrypt decode-value <value>',
+                        'defaults' => array(
+                            'controller' => 'Detail\VarCrypt\Controller\CliController',
+                            'action'     => 'decodeValue',
                         ),
                     ),
                 ),

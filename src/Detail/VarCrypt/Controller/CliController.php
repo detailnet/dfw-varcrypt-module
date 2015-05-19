@@ -2,8 +2,6 @@
 
 namespace Detail\VarCrypt\Controller;
 
-use DateTime;
-
 use Zend\Console\Request as ConsoleRequest;
 use Zend\Console\Adapter\AdapterInterface as Console;
 use Zend\Console\ColorInterface as ConsoleColor;
@@ -46,7 +44,7 @@ class CliController extends AbstractActionController
     /**
      * @return void
      */
-    public function encodeAction()
+    public function encodeValueAction()
     {
         $request = $this->getConsoleRequest();
 
@@ -54,6 +52,19 @@ class CliController extends AbstractActionController
         $encodedValue = $this->getEncryptor()->encode($value);
 
         $this->writeConsoleLine($encodedValue);
+    }
+
+    /**
+     * @return void
+     */
+    public function decodeValueAction()
+    {
+        $request = $this->getConsoleRequest();
+
+        $value = $request->getParam('value');
+        $decodedValue = $this->getEncryptor()->decode($value);
+
+        $this->writeConsoleLine($decodedValue);
     }
 
     /**
@@ -72,11 +83,15 @@ class CliController extends AbstractActionController
         return $request;
     }
 
+    /**
+     * @param string $message
+     * @param integer $color
+     */
     protected function writeConsoleLine($message, $color = ConsoleColor::LIGHT_BLUE)
     {
-        /** @var ConsoleRequest $request */
-        $request = $this->getRequest();
-        $isVerbose = $request->getParam('verbose', false) || $request->getParam('v', false);
+//        /** @var ConsoleRequest $request */
+//        $request = $this->getRequest();
+//        $isVerbose = $request->getParam('verbose', false) || $request->getParam('v', false);
 
         $console = $this->getServiceLocator()->get('console');
 
@@ -86,8 +101,8 @@ class CliController extends AbstractActionController
             );
         }
 
-        if ($isVerbose) {
+//        if ($isVerbose) {
             $console->writeLine($message, $color);
-        }
+//        }
     }
 }

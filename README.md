@@ -51,4 +51,26 @@ Install the module through [Composer](http://getcomposer.org/) using the followi
      `config/autoload` directory, rename it to `detail_varcrypt.local.php` and make the appropriate changes.
 
 ## Usage
-tbd
+
+### Encode config
+Before the module can be used, a config (simple string or JSON encoded string) needs to be encoded
+and provided as environment variable.
+
+Here's an example for providing MongoDB credentials as a single environment variable:
+
+1. Define credentials as JSON:
+
+     ```json
+     {
+       "server": "localhost",
+       "user": "root",
+       "password": "root",
+       "port": 27017,
+       "dbname": null,
+       "options": []
+     }
+     ```
+
+2. Make sure an encryption key is set in `detail_varcrypt.local.php`.
+3. Encode JSON: `php public/index.php varcrypt encode-value {"server": ...}`
+4. Save the output as environment variable (e.g. `MONGO`).

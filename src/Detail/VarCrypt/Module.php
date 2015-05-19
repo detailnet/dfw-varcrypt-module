@@ -90,9 +90,12 @@ class Module implements
     {
         return array(
             'Actions:',
-            'varcrypt encode [--verbose|-v] <value>' => 'Encode a string',
-            array('<value>',      'The string to encode'),
-            array('--verbose|-v', '(optional) Turn on verbose mode'),
+//            'varcrypt encode-value [--verbose|-v] <value>' => 'Encode a string value',
+            'varcrypt encode-value <value>' => 'Encode a string value',
+            array('<value>', 'The string to encode'),
+//            array('--verbose|-v', '(optional) Turn on verbose mode'),
+            'varcrypt decode-value <value>' => 'Decode a string value',
+            array('<value>', 'The string to decode'),
         );
     }
 }
