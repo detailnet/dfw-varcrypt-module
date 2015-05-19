@@ -21,6 +21,45 @@ return array(
         'shared' => array(
         ),
     ),
+    'controllers' => array(
+        'factories' => array(
+            'Detail\VarCrypt\Controller\CliController' => 'Detail\VarCrypt\Factory\Controller\CliControllerFactory',
+        ),
+    ),
+    'console' => array(
+        'router' => array(
+            'routes' => array(
+                'dfw-varcrypt.encode-value' => array(
+                    'options' => array(
+//                        'route'    => 'varcrypt encode-value [--verbose|-v] <value>',
+                        'route'    => 'varcrypt encode-value <value>',
+                        'defaults' => array(
+                            'controller' => 'Detail\VarCrypt\Controller\CliController',
+                            'action'     => 'encodeValue',
+                        ),
+                    ),
+                ),
+                'dfw-varcrypt.decode-value' => array(
+                    'options' => array(
+                        'route'    => 'varcrypt decode-value <value>',
+                        'defaults' => array(
+                            'controller' => 'Detail\VarCrypt\Controller\CliController',
+                            'action'     => 'decodeValue',
+                        ),
+                    ),
+                ),
+                'dfw-varcrypt.decode-variable' => array(
+                    'options' => array(
+                        'route'    => 'varcrypt decode-variable <variable>',
+                        'defaults' => array(
+                            'controller' => 'Detail\VarCrypt\Controller\CliController',
+                            'action'     => 'decodeVariable',
+                        ),
+                    ),
+                ),
+            ),
+        ),
+    ),
     'detail_varcrypt' => array(
         'encryptor' => 'Keboola\Encryption\AesEncryptor',
         'key' => null,

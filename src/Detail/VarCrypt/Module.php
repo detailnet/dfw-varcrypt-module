@@ -2,10 +2,12 @@
 
 namespace Detail\VarCrypt;
 
+use Zend\Console\Adapter\AdapterInterface as Console;
 use Zend\Loader\AutoloaderFactory;
 use Zend\Loader\StandardAutoloader;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
+use Zend\ModuleManager\Feature\ConsoleUsageProviderInterface;
 use Zend\ModuleManager\Feature\ControllerProviderInterface;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
 use Zend\ModuleManager\ModuleEvent;
@@ -18,7 +20,8 @@ class Module implements
     AutoloaderProviderInterface,
     ConfigProviderInterface,
     ControllerProviderInterface,
-    ServiceProviderInterface
+    ServiceProviderInterface,
+    ConsoleUsageProviderInterface
 {
     public function onLoadModules(ModuleEvent $event)
     {
@@ -78,5 +81,23 @@ class Module implements
     public function getServiceConfig()
     {
         return array();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getConsoleUsage(Console $console)
+    {
+        return array(
+            'Actions:',
+//            'varcrypt encode-value [--verbose|-v] <value>' => 'Encode a string value',
+            'varcrypt encode-value <value>' => 'Encode a string value',
+            array('<value>', 'The string to encode'),
+//            array('--verbose|-v', '(optional) Turn on verbose mode'),
+            'varcrypt decode-value <value>' => 'Decode a string value',
+            array('<value>', 'The string to decode'),
+            'varcrypt decode-variable <variable>' => 'Decode an environment variable',
+            array('<value>', 'The variable to decode'),
+        );
     }
 }

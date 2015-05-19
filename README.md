@@ -51,4 +51,59 @@ Install the module through [Composer](http://getcomposer.org/) using the followi
      `config/autoload` directory, rename it to `detail_varcrypt.local.php` and make the appropriate changes.
 
 ## Usage
-tbd
+
+### Save/encode config
+Before the module can be used, a config (simple string or JSON encoded string) needs to be encoded
+and provided as environment variable.
+
+Here's an example for providing MongoDB credentials as a single environment variable:
+
+1. Define credentials as JSON:
+
+     ```json
+     {
+       "server": "localhost",
+       "user": "root",
+       "password": "root",
+       "port": 27017,
+       "dbname": null,
+       "options": []
+     }
+     ```
+
+2. Make sure an encryption key is set in `detail_varcrypt.local.php`.
+3. Encode JSON: `php public/index.php varcrypt encode-value {"server": ...}`
+4. Save the output as environment variable (e.g. `MONGO`).
+5. Test that the environment variable can be accessed (at least from the CLI):
+   `php public/index.php varcrypt decode-variable MONGO`
+   
+### Apply/decode config
+The following steps are necessary, to use an encrypted/encoded environment variable in a ZF2 app.
+
+1. Add the environment variable to the module's config (in `detail_varcrypt.local.php`):
+
+     ```php
+     'detail_varcrypt' => array(
+         'listeners' => array(
+             'Detail\VarCrypt\Listener\MultiEncryptorListener' => array(
+                 'apply_variables' => array(
+                     'mongo',
+                 ),
+             ),
+         ),
+     ),
+     ```
+2. Access environment variables as you normally would:
+
+     ```php
+     array(
+         'doctrine' => array(
+             'connection' => array(
+                 'odm_default' => array(
+                     'server' => getenv('MONGO_SERVER') ?: 'localhost',
+                     ...
+                 ),
+             ),
+         ),
+     )
+     ```
