@@ -96,6 +96,8 @@ class Module implements
 //            array('--verbose|-v', '(optional) Turn on verbose mode'),
             'varcrypt decode-value <value>' => 'Decode a string value',
             array('<value>', 'The string to decode'),
+            'varcrypt decode-variable <variable>' => 'Decode an environment variable',
+            array('<value>', 'The variable to decode'),
         );
     }
 }

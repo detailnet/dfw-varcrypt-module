@@ -48,6 +48,15 @@ return array(
                         ),
                     ),
                 ),
+                'dfw-varcrypt.decode-variable' => array(
+                    'options' => array(
+                        'route'    => 'varcrypt decode-variable <variable>',
+                        'defaults' => array(
+                            'controller' => 'Detail\VarCrypt\Controller\CliController',
+                            'action'     => 'decodeVariable',
+                        ),
+                    ),
+                ),
             ),
         ),
     ),
