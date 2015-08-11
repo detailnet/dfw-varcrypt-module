@@ -6,7 +6,6 @@ use Traversable;
 
 use Zend\Config\Factory as ConfigFactory;
 use Zend\ModuleManager\Listener\ConfigListener;
-use Zend\ModuleManager\Listener\DefaultListenerAggregate;
 use Zend\ModuleManager\Listener\ListenerOptions;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
